@@ -2,16 +2,16 @@ import requests
 from django.shortcuts import render
 # Create your views here.
 
-def weather_view(request):
+def weather_view(req):
     weather_data = {}
     error_message = None
-    if request.method=='POST':
-        city=request.POST.get('city')
+    if req.method=='POST':
+        city=req.POST.get('city')
         API_KEY="0a624d6b6b1499872f08f29e4fbfa25f"
         urls = f"https://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&appid={API_KEY}"
 
         try:
-            response=request.get(urls, timeout=5)
+            response=req.get(urls, timeout=5)
             data=response.json()
             
             if response.status_code==200:
@@ -25,9 +25,9 @@ def weather_view(request):
                 }
             else:
                 error_message = data.get('message', 'City not found.')
-        except request.exceptions.RequestException:
+        except req.exceptions.RequestException:
             error_message='Network ERROR'
-    return render(request, 'core/dashboard.html', {'weather': weather_data, 'error': error_message})
+    return render(req, 'core/dashboard.html', {'weather': weather_data, 'error': error_message})
 
 
 
