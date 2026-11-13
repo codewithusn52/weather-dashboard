@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Live Weather Dashboard </title>
+    </head>
+    <body style="font-family:Georgia; text-align:center; margin-top: 50px;">
+        <h1 style="font-family: Calibri; text-align:center;"> LIVE WEATHER DASHBOARD </h1>
+
+        <form method="POST">
+            
+           {% csrf_token %}
+            <div>
+                <input type="text" name="city" placeholder="Enter city name: " required style="text-align: center; padding: 9px;">
+                <button type="submit" style="padding: 10px; text-align: center;"> Search </button>
+            </div>
+        
+        </form>
+        {% if error %}
+            <p style="color: crimson; font-family:Georgia, 'Times New Roman', Times, serif ;">{{ ERROR }} </p>
+        {% endif %}
+
+        {% if Weather %}
+            <div style="margin-top:22px ; text-align: center;">
+                <h2 style="text-align: center;"> {{ Weather.city }} </h2>
+                <p> Temperature: <strong> { weather.temperature }} degree celcius </strong></p>
+                <p> Condition: <strong> { weather.description  }} </strong></p>
+                <p> Humidity: <strong> { weather.humidity }}% </strong></p>
+            </div>
+        {% endif %}
+    </body>
+</html>
